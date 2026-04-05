@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google"; // Ganti ke Plus Jakarta Sans
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import LayoutContent from "./LayoutContent";
+import NextTopLoader from 'nextjs-toploader'; 
 
-// Konfigurasi Font
 const jakarta = Plus_Jakarta_Sans({ 
   subsets: ["latin"], 
   weight: ["400", "500", "600", "700", "800"] 
@@ -20,11 +20,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      {/* Terapkan font ke seluruh body */}
+    // Tambahkan suppressHydrationWarning di sini agar extension browser tidak bikin error
+    <html lang="en" suppressHydrationWarning> 
       <body className={`${jakarta.className} antialiased`}>
-        <Navbar />
-        <main>{children}</main>
+        <NextTopLoader 
+          color="#2563eb" 
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false} 
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #2563eb,0 0 5px #2563eb"
+        />
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );

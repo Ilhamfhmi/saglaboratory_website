@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Membuat user admin spesifik untuk SAG Laboratory
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin SAG',
+            'email' => 'admin@sag.com',
+            'password' => bcrypt('admin123'), // Password diset manual menjadi admin123
         ]);
     }
 }

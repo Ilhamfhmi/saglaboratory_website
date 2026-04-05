@@ -1,0 +1,7 @@
+node_modules/
+.next/
+api-sag/vendor/
+api-sag/.env
+client-sag/.env
+api-sag/public/uploads/*
+.DS_Store

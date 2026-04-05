@@ -3,22 +3,23 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion'; // Import Framer Motion
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  // Pastikan href di sini 100% sama dengan nama folder kamu di app/events
   const menuItems = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Event', href: '/event' },
+    { name: 'Events', href: '/events' }, // Diubah namanya jadi Events agar konsisten
     { name: 'Study Group', href: '/study-group' },
     { name: 'Research', href: '/research' },
   ];
 
   return (
-    <nav className="bg-white/95 backdrop-blur-md text-gray-800 py-3 px-8 shadow-sm fixed w-full top-0 z-[100] transition-all h-20 flex items-center font-jakarta">
+    <nav className="bg-white/95 backdrop-blur-md text-gray-800 py-3 px-8 shadow-sm fixed w-full top-0 z-[100] transition-all h-20 flex items-center font-jakarta text-left">
       <div className="container mx-auto flex justify-between items-center relative h-full">
         
         {/* LOGO SECTION */}
@@ -37,11 +38,12 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* DESKTOP MENU (Tengah) */}
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center bg-gray-100/50 border border-gray-200/50 p-1 rounded-full overflow-hidden">
           <div className="flex items-center relative uppercase tracking-widest text-[10px] font-black">
             {menuItems.map((item) => {
-              const isActive = pathname === item.href;
+              // Logika pengecekan active yang lebih akurat
+              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
               
               return (
                 <Link 
@@ -51,10 +53,7 @@ export default function Navbar() {
                     isActive ? "text-white" : "text-gray-500 hover:text-sag-blue"
                   }`}
                 >
-                  {/* Teks Menu */}
                   <span className="relative z-20">{item.name}</span>
-                  
-                  {/* Efek Rounded Biru yang Menggeser */}
                   {isActive && (
                     <motion.div
                       layoutId="activePill"
@@ -93,7 +92,7 @@ export default function Navbar() {
         {/* MOBILE OVERLAY */}
         <div className={`fixed inset-0 bg-white/98 backdrop-blur-xl z-[100] flex flex-col items-center justify-center space-y-8 transition-all duration-500 md:hidden ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
           {menuItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
             return (
               <Link 
                 key={item.name} 
