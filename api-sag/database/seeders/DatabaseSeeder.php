@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // Membuat user admin spesifik untuk SAG Laboratory
         User::factory()->create([
             'name' => 'Admin SAG',
-            'email' => 'admin@sag.com',
+            'email' => 'admin@saglaboratory.com',
             'password' => bcrypt('admin123'), // Password diset manual menjadi admin123
         ]);
     }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\StudyGroupController; // 1. Import Controller Study Group
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::get('/research/{id}', [ResearchController::class, 'show']);
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{id}', [EventController::class, 'show']);
 
+// Rute Study Group (Publik)
+Route::get('/study-groups', [StudyGroupController::class, 'index']);
+Route::get('/study-groups/{id}', [StudyGroupController::class, 'show']);
+
 
 // ─── GOLONGAN RUTE ADMIN (PROTECTED) ───────────────────────────────────────
 // Wajib menggunakan Bearer Token dari Sanctum
@@ -38,20 +43,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- Admin Research Management ---
     Route::post('/research', [ResearchController::class, 'store']);
-    // Menggunakan match agar fleksibel menerima spoofing method dari FormData
     Route::match(['post', 'put'], '/research/{id}', [ResearchController::class, 'update']); 
     Route::delete('/research/{id}', [ResearchController::class, 'destroy']);
 
     // --- Admin Events Management ---
-    // 1. Tambah Event Baru
     Route::post('/events', [EventController::class, 'store']);
-    
-    // 2. Update Event (Solusi Final untuk error "Method Not Supported")
-    // Menerima request POST (untuk upload file) dan PUT (untuk update data)
     Route::match(['post', 'put'], '/events/{id}', [EventController::class, 'update']); 
-    
-    // 3. Hapus Event
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
+
+    // --- Admin Study Group Management ---
+    // 1. Tambah Grup Baru
+    Route::post('/study-groups', [StudyGroupController::class, 'store']);
+    
+    // 2. Update Grup (Handle Multipart/Form-Data dengan Method Spoofing)
+    Route::match(['post', 'put'], '/study-groups/{id}', [StudyGroupController::class, 'update']); 
+    
+    // 3. Hapus Grup
+    Route::delete('/study-groups/{id}', [StudyGroupController::class, 'destroy']);
 
 });
 

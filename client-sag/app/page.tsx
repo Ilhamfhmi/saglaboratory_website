@@ -5,25 +5,9 @@ import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// ─── Constants ───────────────────────────────────────────────────────────────
+// ─── Constants (Core Competencies) ───────────────────────────────────────────
 
-const SLIDES = [
-  "/kegiatan1.jpg",
-  "/kegiatan2.png",
-  "/kegiatan3.jpg",
-  "/kegiatan4.png",
-];
-
-const MARQUEE_ITEMS = [
-  "SAG Laboratory",
-  "Education",
-  "SAG Study Group",
-  "Cobit",
-  "ISG Telkom University",
-  "Isaca",
-];
-
-const STUDY_GROUP_TOPICS = [
+const STUDY_ROLES = [
   {
     title: "Enterprise Architecture",
     description: "Designing structural blueprints that align business strategy with IT infrastructure.",
@@ -61,73 +45,20 @@ const STUDY_GROUP_TOPICS = [
   },
 ];
 
-const RESEARCH_ARTICLES = [
-  {
-    image: "/business process.jpg",
-    alt: "BPR Research",
-    tag: "Business Process",
-    title: "Mengenal Apa Itu Rekayasa Proses Bisnis (BPR)",
-    excerpt: "Pendekatan strategis yang melibatkan pemikiran ulang secara fundamental untuk mencapai perbaikan dramatis dalam kinerja bisnis...",
-    url: "https://medium.com/@SAGLaboratory/mengenal-apa-itu-rekayasa-proses-bisnis-business-process-reengineering-bpr-07ad971f253d",
-    delay: 100,
-  },
-  {
-    image: "/Togaf.jpg",
-    alt: "EA Framework",
-    tag: "Enterprise Architecture",
-    title: "TOGAF, Zachman, FEAF: Framework EA Pilihan",
-    excerpt: "Enterprise Architecture (EA) merupakan implementasi penting dalam mengelola struktur organisasi dan infrastruktur IT...",
-    url: "https://medium.com/@SAGLaboratory/togaf-zachman-feaf-framework-enterprise-architecture-yang-perlu-anda-tahu-95eb10d1b668",
-    delay: 300,
-  },
-  {
-    image: "/bpm.jpg",
-    alt: "Business Modeling",
-    tag: "BPM Strategy",
-    title: "Pemodelan Proses Bisnis: Strategi Visual Menuju Organisasi yang Efisien dan Adaptif",
-    excerpt: "Perusahaan tidak bisa lagi bergantung pada proses yang tidak efisien di tengah ketatnya persaingan bisnis global...",
-    url: "https://medium.com/@SAGLaboratory/pemodelan-proses-bisnis-strategi-visual-menuju-organisasi-yang-efisien-dan-adaptif-660fb01e84a5",
-    delay: 500,
-  },
+const SLIDES = [
+  "/kegiatan1.jpg",
+  "/kegiatan2.png",
+  "/kegiatan3.jpg",
+  "/kegiatan4.png",
 ];
 
-const EVENTS = [
-  {
-    image: "/kuliah-umum.png",
-    alt: "Kuliah Umum",
-    dotColor: "bg-blue-400",
-    labelColor: "text-blue-300",
-    label: "Flagship Program",
-    title: "Kuliah Umum",
-    description: "Menghadirkan praktisi industri terkemuka untuk berbagi wawasan strategis mengenai tata kelola TI dan arsitektur enterprise masa kini.",
-    delay: 100,
-    offset: false,
-    slug: "kuliah-umum",
-  },
-  {
-    image: "/kegiatan1.jpg",
-    alt: "Internal Competition",
-    dotColor: "bg-green-400",
-    labelColor: "text-green-300",
-    label: "Internal Development",
-    title: "SAG Internal Competition",
-    description: "Wadah kompetisi bagi anggota laboratorium untuk menguji kemampuan dalam pemodelan proses bisnis dan solusi sistem informasi.",
-    delay: 300,
-    offset: false,
-    slug: "sag-internal-competition",
-  },
-  {
-    image: "/Rehat-sejenak.png",
-    alt: "Rehat sejenak",
-    dotColor: "bg-purple-400",
-    labelColor: "text-purple-300",
-    label: "Well-being & Psychology",
-    title: "SAG Rehat Sejenak",
-    description: "Sesi sharing santai bersama ahli psikologi untuk menjaga kesehatan mental dan keseimbangan produktivitas mahasiswa",
-    delay: 500,
-    offset: false,
-    slug: "sag-rehat-sejenak",
-  },
+const MARQUEE_ITEMS = [
+  "SAG Laboratory",
+  "Education",
+  "SAG Study Group",
+  "Cobit",
+  "ISG Telkom University",
+  "Isaca",
 ];
 
 const PARTNERS = [
@@ -157,94 +88,54 @@ function SliderArrowIcon({ direction }) {
   );
 }
 
-function StudyGroupCard({ title, description, icon, index }) {
-  return (
-    <div data-aos="fade-up" data-aos-delay={100 * (index + 1)} className="p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] bg-white border border-blue-100/50 hover:border-blue-400 cursor-pointer group shadow-sm hover:shadow-2xl hover:-translate-y-4 transition-all duration-700 text-left">
-      <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-700 shadow-lg shadow-blue-100">
-        {icon}
-      </div>
-      <h3 className="text-sag-blue text-xl md:text-2xl font-black mb-6 uppercase tracking-tight">{title}</h3>
-      <p className="text-gray-500 text-base md:text-lg leading-relaxed font-medium">{description}</p>
-    </div>
-  );
-}
-
-function ResearchCard({ image, alt, tag, title, excerpt, url, delay }) {
-  return (
-    <div data-aos="fade-up" data-aos-delay={delay} onClick={() => window.open(url, "_blank")} className="group flex flex-col h-full bg-white rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 hover:border-blue-200 transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.05)] overflow-hidden cursor-pointer text-left">
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
-        <Image src={image} alt={alt} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-        <div className="absolute top-4 left-4 md:top-6 md:left-6">
-          <span className="bg-white/95 backdrop-blur-md text-sag-blue text-[9px] md:text-[10px] font-black px-4 py-2 rounded-xl uppercase tracking-widest shadow-xl">{tag}</span>
-        </div>
-      </div>
-      <div className="p-8 md:p-10 flex flex-col flex-grow">
-        <h3 className="text-sag-blue text-xl md:text-2xl font-black mb-5 group-hover:text-blue-600 transition-colors duration-500 leading-[1.2] line-clamp-2">{title}</h3>
-        <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-8 line-clamp-3 font-medium opacity-80">{excerpt}</p>
-        <div className="mt-auto flex items-center gap-3 text-blue-600 font-black uppercase tracking-widest text-[10px] md:text-[11px]">
-          <span className="border-b-2 border-transparent group-hover:border-blue-600 pb-1 transition-all duration-500">Read Full Article</span>
-          <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-sm">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-0.5">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EventCard({ image, alt, dotColor, labelColor, label, title, description, delay, offset, slug }) {
-  return (
-    <div data-aos="fade-up" data-aos-delay={delay} className={`group relative bg-white/5 border border-white/10 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden hover:bg-white/10 transition-all duration-700 flex flex-col text-left ${offset ? "lg:translate-y-12" : ""}`}>
-      <div className="relative aspect-[16/10] overflow-hidden flex-shrink-0">
-        <Image src={image} alt={alt} fill className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
-        <div className="absolute inset-0 bg-gradient-to-t from-sag-blue via-transparent to-transparent" />
-      </div>
-      <div className="p-8 md:p-10 flex flex-col flex-grow">
-        <div className="flex items-center gap-2 mb-4">
-          <span className={`w-2 h-2 ${dotColor} rounded-full animate-pulse`} />
-          <span className={`${labelColor} text-[10px] font-black uppercase tracking-[0.2em]`}>{label}</span>
-        </div>
-        <h3 className="text-white text-2xl md:text-3xl font-black mb-4 uppercase tracking-tighter leading-tight">{title}</h3>
-        <p className="text-blue-100/60 text-sm md:text-base leading-relaxed font-medium mb-8">{description}</p>
-        <div className="mt-auto">
-          <button onClick={() => window.location.href = `/events/${slug}`} className="group/btn flex items-center gap-3 text-white/70 hover:text-white transition-colors duration-300">
-            <span className="text-[11px] font-black uppercase tracking-widest border-b border-white/20 group-hover/btn:border-white pb-1 transition-all duration-300">View Article</span>
-            <div className="w-8 h-8 rounded-full border border-white/20 group-hover/btn:border-white group-hover/btn:bg-white/10 flex items-center justify-center transition-all duration-300">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover/btn:translate-x-0.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main Component ───────────────────────────────────────────────────────────
-
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [research, setResearch] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev === SLIDES.length - 1 ? 0 : prev + 1));
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? SLIDES.length - 1 : prev - 1));
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, easing: "ease-in-out" });
+    fetchDatabaseData();
     const timer = setInterval(nextSlide, 10000);
     return () => clearInterval(timer);
   }, [currentSlide]);
 
-  return (
-    <div className="min-h-screen bg-white font-jakarta overflow-x-hidden text-sag-blue">
+  const fetchDatabaseData = async () => {
+    try {
+      const baseUrl = "http://localhost:8000/api";
+      const [resR, resE] = await Promise.all([
+        fetch(`${baseUrl}/research`),
+        fetch(`${baseUrl}/events`)
+      ]);
 
-      {/* ── SECTION 1: HERO ─────────────────────────────────────────────────── */}
-      <section className="min-h-screen bg-sag-blue flex items-center px-6 md:px-24 pt-20 relative overflow-hidden">
+      const dataR = await resR.json();
+      const dataE = await resE.json();
+
+      setResearch(Array.isArray(dataR) ? dataR.slice(0, 3) : []);
+      setEvents(Array.isArray(dataE) ? dataE.slice(0, 3) : []);
+    } catch (err) {
+      console.error("Gagal sinkronisasi database:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getImageUrl = (url: string) => {
+    if (!url) return "/logo-sag.png";
+    return url.startsWith('http') ? url : `http://localhost:8000/storage/${url}`;
+  };
+
+  return (
+    <div className="min-h-screen bg-white font-jakarta overflow-x-hidden text-sag-blue text-left">
+
+      {/* ── SECTION 1: HERO ── */}
+      <section className="min-h-screen bg-sag-blue flex items-center px-6 md:px-24 pt-20 relative overflow-hidden text-left">
         <div className="absolute top-0 right-0 w-1/4 h-full bg-white/5 skew-x-12 translate-x-32 hidden lg:block" />
-        <div className="container mx-auto z-10 grid lg:grid-cols-2 gap-12 items-center text-left">
+        <div className="container mx-auto z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-3xl order-2 lg:order-1 lg:-mt-10 relative z-20">
             <div data-aos="fade-down" data-aos-delay="100" className="inline-block mb-8 md:mb-12 relative group">
               <div className="backdrop-blur-2xl bg-white/10 border border-white/20 py-3 px-6 md:px-8 rounded-full flex items-center shadow-2xl transition-all hover:bg-white/15">
@@ -258,7 +149,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <h1 data-aos="fade-up" data-aos-delay="300" className="text-white text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-tight md:leading-none mb-6 md:mb-10 uppercase text-balance">
+            <h1 data-aos="fade-up" data-aos-delay="300" className="text-white text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-tight md:leading-none mb-6 md:mb-10 uppercase">
               SAG <span className="text-blue-400">LABORATORY</span>
             </h1>
             <p data-aos="fade-up" data-aos-delay="500" className="text-blue-100 text-lg md:text-2xl max-w-2xl leading-relaxed mb-10 md:mb-16 font-medium opacity-90">
@@ -266,12 +157,12 @@ export default function Home() {
               <span className="text-white block mt-5 font-semibold">"Bridging systems engineering with strategic IT governance."</span>
             </p>
             <div data-aos="fade-up" data-aos-delay="700" className="flex flex-col sm:flex-row gap-4 md:gap-6 font-bold relative z-30">
-              <button className="group/btn relative px-8 md:px-12 py-4 md:py-5 bg-white text-sag-blue rounded-2xl overflow-hidden hover:bg-blue-50 transition-all duration-500 shadow-xl hover:-translate-y-2 active:scale-95 flex items-center justify-center gap-3 text-base md:text-lg uppercase tracking-wider cursor-pointer">
+              <Link href="/research" className="group/btn relative px-8 md:px-12 py-4 md:py-5 bg-white text-sag-blue rounded-2xl overflow-hidden hover:bg-blue-50 transition-all duration-500 shadow-xl hover:-translate-y-2 active:scale-95 flex items-center justify-center gap-3 text-base md:text-lg uppercase tracking-wider">
                 Explore Research <ArrowIcon className="transition-transform duration-500 group-hover/btn:translate-x-2" />
-              </button>
-              <button className="px-8 md:px-12 py-4 md:py-5 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-2xl hover:bg-white/20 transition-all duration-500 shadow-lg hover:-translate-y-2 active:scale-95 text-base md:text-lg uppercase tracking-wider cursor-pointer">
+              </Link>
+              <Link href="/about" className="px-8 md:px-12 py-4 md:py-5 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-2xl hover:bg-white/20 transition-all duration-500 shadow-lg hover:-translate-y-2 active:scale-95 text-base md:text-lg uppercase tracking-wider text-center">
                 About Our Lab
-              </button>
+              </Link>
             </div>
           </div>
           <div className="relative group flex justify-center lg:justify-center order-1 lg:order-2 z-10">
@@ -284,15 +175,16 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                {[{ dir: "left", action: prevSlide, pos: "left-2 md:left-4" }, { dir: "right", action: nextSlide, pos: "right-2 md:right-4" }].map(({ dir, action, pos }) => (
-                  <button key={dir} onClick={action} className={`absolute ${pos} top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover/slider:opacity-100 transition-all hover:bg-white/20 z-30 duration-500 cursor-pointer`}>
-                    <SliderArrowIcon direction={dir} />
-                  </button>
-                ))}
+                <button onClick={prevSlide} className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover/slider:opacity-100 transition-all hover:bg-white/20 z-30 duration-500">
+                  <SliderArrowIcon direction="left" />
+                </button>
+                <button onClick={nextSlide} className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover/slider:opacity-100 transition-all hover:bg-white/20 z-30 duration-500">
+                  <SliderArrowIcon direction="right" />
+                </button>
               </div>
               <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-2 md:space-x-3 z-20 bg-black/10 backdrop-blur-md px-4 py-2 rounded-full">
                 {SLIDES.map((_, index) => (
-                  <button key={index} onClick={() => setCurrentSlide(index)} className={`h-1.5 transition-all duration-700 rounded-full cursor-pointer ${index === currentSlide ? "w-6 md:w-8 bg-white" : "w-2 bg-white/30"}`} />
+                  <button key={index} onClick={() => setCurrentSlide(index)} className={`h-1.5 transition-all duration-700 rounded-full ${index === currentSlide ? "w-6 md:w-8 bg-white" : "w-2 bg-white/30"}`} />
                 ))}
               </div>
             </div>
@@ -300,18 +192,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── MARQUEE ─────────────────────────────────────────────────────────── */}
-      <div className="relative bg-sag-blue overflow-hidden py-6 md:py-10 z-20 border-y border-white/10">
+      {/* ── MARQUEE ── */}
+      <div className="relative bg-sag-blue overflow-hidden py-6 md:py-10 z-20 border-y border-white/10 text-left">
         <div className="absolute inset-0 bg-white/5 backdrop-blur-2xl" />
-        <div className="relative z-10 flex animate-marquee whitespace-nowrap items-center">
+        <div className="relative z-10 flex animate-marquee whitespace-nowrap items-center text-left">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex items-center">
+            <div key={i} className="flex items-center text-left">
               {MARQUEE_ITEMS.map((item, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex items-center text-left">
                   <span className="text-white text-lg md:text-2xl font-black uppercase tracking-tighter px-8 md:px-12 opacity-90">{item}</span>
-                  <div className="flex items-center justify-center">
-                    <div className="w-2 md:w-2.5 h-2 md:h-2.5 bg-green-400 rounded-full shadow-[0_0_20px_rgba(74,222,128,1)]" />
-                  </div>
+                  <div className="w-2 md:w-2.5 h-2 md:h-2.5 bg-green-400 rounded-full shadow-[0_0_20px_rgba(74,222,128,1)]" />
                 </div>
               ))}
             </div>
@@ -319,194 +209,164 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── SECTION 2: SAG STUDY GROUP ──────────────────────────────────────── */}
+      {/* ── SECTION 2: SAG STUDY GROUP (CORE COMPETENCIES) ── */}
       <section className="py-24 md:py-40 px-6 md:px-24 bg-gradient-to-b from-white via-blue-50/50 to-blue-100/30 relative overflow-hidden text-left">
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `linear-gradient(#2563eb 1px, transparent 1px), linear-gradient(90deg, #2563eb 1px, transparent 1px)`, backgroundSize: "60px 60px" }} />
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-4xl mb-16 md:mb-24">
+        <div className="container mx-auto relative z-10 text-left">
+          <div className="max-w-4xl mb-16 md:mb-24 text-left">
             <h2 data-aos="fade-up" className="text-sag-blue text-4xl md:text-7xl font-black tracking-tighter mb-8 leading-none uppercase">
               SAG <span className="text-blue-600">Study Group</span>
             </h2>
             <p data-aos="fade-up" data-aos-delay="200" className="text-gray-600 text-lg md:text-2xl leading-relaxed max-w-3xl font-medium mb-12 opacity-80">
-              The SAG Study Group 2025 is focused on three key areas to empower students with strategic technical skills:
-              <span className="text-sag-blue font-extrabold underline decoration-blue-200 decoration-4 underline-offset-4 opacity-100"> Enterprise Architecture, Business Process, and IT Governance.</span>
+              The program is focused on three key areas to empower students with strategic technical skills:
+              <span className="text-sag-blue font-extrabold underline decoration-blue-200 decoration-4 underline-offset-4"> Enterprise Architecture, Business Process, and IT Governance.</span>
             </p>
-            <button onClick={() => (window.location.href = "/study-group")} className="group/join relative px-8 md:px-10 py-4 bg-sag-blue text-white rounded-2xl overflow-hidden hover:bg-blue-800 transition-all duration-700 shadow-xl hover:-translate-y-2 active:scale-95 flex items-center justify-center gap-3 text-base md:text-lg font-bold uppercase tracking-wider cursor-pointer">
+            <Link href="/study-group" className="group/join relative inline-flex px-8 md:px-10 py-4 bg-sag-blue text-white rounded-2xl overflow-hidden hover:bg-blue-800 transition-all duration-700 shadow-xl hover:-translate-y-2 active:scale-95 items-center justify-center gap-3 text-base md:text-lg font-bold uppercase tracking-wider">
               Join Study Group <ArrowIcon className="transition-transform duration-500 group-hover/join:translate-x-2" />
-            </button>
+            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            {STUDY_GROUP_TOPICS.map((topic, i) => <StudyGroupCard key={i} index={i} {...topic} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 3: RESEARCH ─────────────────────────────────────────────── */}
-      <section className="py-24 md:py-40 px-6 md:px-24 bg-gradient-to-b from-white via-blue-50 to-blue-100/30 relative overflow-hidden">
-        <div className="container mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8 text-left">
-            <div className="max-w-2xl">
-              <h2 data-aos="fade-right" className="text-sag-blue text-4xl md:text-7xl font-black tracking-tighter mb-6 leading-none uppercase">
-                Latest <span className="text-blue-600">Research</span>
-              </h2>
-              <p data-aos="fade-right" data-aos-delay="200" className="text-gray-600 text-lg md:text-xl font-medium leading-relaxed max-w-xl opacity-80">
-                Exploring information systems strategy through our latest publications on Medium.
-              </p>
-            </div>
-            <button onClick={() => window.open("https://medium.com/@SAGLaboratory", "_blank")} className="group flex items-center gap-3 bg-white hover:bg-blue-50 text-sag-blue font-bold px-8 py-4 rounded-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 uppercase text-[10px] md:text-xs tracking-widest cursor-pointer shadow-sm hover:shadow-md w-fit">
-              Visit Our Medium <ArrowIcon className="transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {RESEARCH_ARTICLES.map((article, i) => <ResearchCard key={i} {...article} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 4: EVENTS ───────────────────────────────────────────────── */}
-      <section className="py-24 md:py-40 px-6 md:px-24 bg-sag-blue relative overflow-hidden text-left">
-        <div className="container mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
-            <div className="max-w-3xl">
-              <h2 data-aos="fade-right" className="text-white text-4xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
-                Featured <span className="text-blue-400">Events</span>
-              </h2>
-              <p data-aos="fade-right" data-aos-delay="200" className="text-blue-100/70 text-lg md:text-xl font-medium max-w-xl opacity-80">
-                Connecting expertise and ambition through our flagship programs and internal development.
-              </p>
-            </div>
-            <button onClick={() => (window.location.href = "/events")} className="group flex items-center gap-3 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-500 border border-white/20 hover:border-white/40 uppercase text-[10px] md:text-xs tracking-widest cursor-pointer shadow-sm hover:shadow-md backdrop-blur-md whitespace-nowrap overflow-hidden w-fit">
-              View All Events <ArrowIcon className="transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-8">
-            {EVENTS.map((event, i) => <EventCard key={i} {...event} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 5: OFFICIAL PARTNERS ────────────────────────────────────── */}
-      <section className="py-24 md:py-32 px-6 md:px-24 bg-gray-100 relative overflow-hidden">
-        <div className="container mx-auto relative z-10 text-center">
-          <div data-aos="fade-up" className="mb-16 md:mb-20">
-            <h2 className="text-sag-blue text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 leading-none uppercase">
-              Official <span className="text-blue-600">Partners</span>
-            </h2>
-            <div className="w-16 md:w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 opacity-70">
-            {PARTNERS.map((partner, index) => (
-              <div key={index} data-aos="fade-up" data-aos-delay={partner.delay} className="flex flex-col items-center group">
-                <div className={`relative grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110 mb-6 flex items-center justify-center flex-shrink-0 ${
-                  partner.isLarge ? "w-48 h-24 md:w-64 md:h-32" : "w-32 h-16 md:w-40 md:h-20 translate-y-0 md:translate-y-7"
-                }`}>
-                  <Image src={partner.logo} alt={partner.name} fill className="object-contain" />
+            {STUDY_ROLES.map((role, i) => (
+              <div key={i} data-aos="fade-up" data-aos-delay={100 * (i + 1)} className="p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] bg-white border border-blue-100/50 hover:border-blue-400 group shadow-sm hover:shadow-2xl hover:-translate-y-4 transition-all duration-700 text-left">
+                <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-700 shadow-lg shadow-blue-100">
+                  {role.icon}
                 </div>
-                <span className={`text-sag-blue/60 text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] group-hover:text-sag-blue transition-colors ${!partner.isLarge ? "mt-4 md:mt-4" : ""}`}>
-                  {partner.name}
-                </span>
+                <h3 className="text-sag-blue text-xl md:text-2xl font-black mb-6 uppercase tracking-tight">{role.title}</h3>
+                <p className="text-gray-500 text-base md:text-lg leading-relaxed font-medium">{role.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ─────────────────────────────────────────────────────────── */}
-      {/* Warna disamakan dengan Section 2: Biru Muda yang sangat soft */}
-      <footer className="bg-gradient-to-b from-white via-blue-50/50 to-blue-100/40 py-16 md:py-24 px-6 md:px-32 relative overflow-hidden border-t border-blue-100">
-        
-        {/* Background Decorative - Tetap ada grid tipis seperti Section 2 agar konsisten */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-          style={{ 
-            backgroundImage: `linear-gradient(#2563eb 1px, transparent 1px), linear-gradient(90deg, #2563eb 1px, transparent 1px)`, 
-            backgroundSize: "40px 40px" 
-          }} 
-        />
+      {/* ── SECTION 3: RESEARCH (FROM DB) ── */}
+      <section className="py-24 md:py-40 px-6 md:px-24 bg-white relative overflow-hidden text-left">
+        <div className="container mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8 text-left">
+            <div className="text-left">
+              <h2 data-aos="fade-right" className="text-sag-blue text-4xl md:text-7xl font-black tracking-tighter mb-6 leading-none uppercase">
+                Latest <span className="text-blue-600">Research</span>
+              </h2>
+              <p data-aos="fade-right" data-aos-delay="200" className="text-gray-600 text-lg md:text-xl font-medium leading-relaxed max-w-xl opacity-80">
+                Exploring information systems strategy through our latest laboratory publications.
+              </p>
+            </div>
+            <Link href="/research" className="group flex items-center gap-3 bg-white hover:bg-blue-50 text-sag-blue font-bold px-8 py-4 rounded-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 uppercase text-[10px] md:text-xs tracking-widest shadow-sm">
+              Visit Research Hub <ArrowIcon className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            {research.map((item: any, i) => (
+              <Link href={`/research/${item.id}`} key={i} data-aos="fade-up" data-aos-delay={100 * i} className="group bg-white rounded-[2rem] border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-700 text-left">
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <img src={getImageUrl(item.image_url)} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                </div>
+                <div className="p-8 text-left">
+                   <span className="bg-blue-50 text-blue-600 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Research Asset</span>
+                   <h3 className="text-sag-blue text-xl font-black mt-4 mb-5 line-clamp-2 uppercase leading-tight group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                   <div className="flex items-center gap-3 text-blue-600 font-black uppercase text-[10px] tracking-widest">
+                      <span>Read Asset</span>
+                      <ArrowIcon className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                   </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <div className="max-w-7xl mx-auto relative z-10 text-left">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24">
-            
-            {/* Branding - Logo SAG berwarna asli (bukan putih) karena background terang */}
+      {/* ── SECTION 4: EVENTS (FROM DB) ── */}
+      <section className="py-24 md:py-40 px-6 md:px-24 bg-sag-blue relative overflow-hidden text-left text-white">
+        <div className="container mx-auto relative z-10 text-left">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
+            <div className="text-left">
+              <h2 data-aos="fade-right" className="text-white text-4xl md:text-7xl font-black tracking-tighter mb-6 uppercase leading-none">
+                Featured <span className="text-blue-400">Events</span>
+              </h2>
+              <p data-aos="fade-right" data-aos-delay="200" className="text-blue-100/70 text-lg md:text-xl font-medium max-w-xl opacity-80">
+                Connecting expertise and ambition through our flagship programs.
+              </p>
+            </div>
+            <Link href="/events" className="group flex items-center gap-3 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl border border-white/20 uppercase text-[10px] tracking-widest backdrop-blur-md">
+              View All Events <ArrowIcon className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {events.map((event: any, i) => (
+              <Link href={`/events/${event.id}`} key={i} data-aos="fade-up" className="group relative bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden hover:bg-white/10 transition-all flex flex-col h-full text-left">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img src={getImageUrl(event.image_url)} alt={event.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div className="p-8 flex flex-col flex-grow text-left">
+                   <h3 className="text-white text-2xl font-black mb-4 uppercase tracking-tighter group-hover:text-blue-300 transition-colors">{event.title}</h3>
+                   <p className="text-blue-100/60 text-sm font-medium mb-8 line-clamp-3 leading-relaxed">{event.description}</p>
+                   <div className="mt-auto flex items-center gap-3 text-blue-300 font-black uppercase text-[10px] tracking-[0.2em]">
+                      Explore Detail <ArrowIcon />
+                   </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 5: PARTNERS ── */}
+      <section className="py-24 md:py-32 px-6 md:px-24 bg-gray-100 relative overflow-hidden text-center">
+        <div className="container mx-auto relative z-10">
+          <div data-aos="fade-up" className="mb-16">
+            <h2 className="text-sag-blue text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4">Official <span className="text-blue-600">Partners</span></h2>
+            <div className="w-16 md:w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
+          </div>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 opacity-70">
+            {PARTNERS.map((partner, index) => (
+              <div key={index} data-aos="fade-up" data-aos-delay={partner.delay} className="flex flex-col items-center group">
+                <div className={`relative grayscale group-hover:grayscale-0 transition-all duration-500 hover:scale-110 mb-6 flex items-center justify-center ${partner.isLarge ? "w-48 h-24 md:w-64 md:h-32" : "w-32 h-16 md:w-40 md:h-20"}`}>
+                  <Image src={partner.logo} alt={partner.name} fill className="object-contain" />
+                </div>
+                <span className="text-sag-blue/60 text-[10px] font-black uppercase tracking-[0.2em] group-hover:text-sag-blue transition-colors">{partner.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="bg-gradient-to-b from-white via-blue-50/50 to-blue-100/40 py-16 md:py-24 px-6 md:px-32 relative overflow-hidden border-t border-blue-100 text-left">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `linear-gradient(#2563eb 1px, transparent 1px), linear-gradient(90deg, #2563eb 1px, transparent 1px)`, backgroundSize: "40px 40px" }} />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24 text-left">
             <div className="flex flex-col items-start text-left">
-              <div className="relative w-44 h-12 md:h-16 mb-6">
+              <div className="relative w-44 h-16 mb-6">
                 <Image src="/logo-sag.png" alt="SAG Lab Logo" fill className="object-contain object-left" />
               </div>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-[320px] mb-10">
-                Bridging systems engineering with strategic IT governance to drive digital transformation and organizational excellence.
-              </p>
-              
-              <div className="flex items-center gap-4">
+              <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-[320px] mb-10 text-left">Bridging systems engineering with strategic IT governance to drive digital transformation and organizational excellence.</p>
+              <div className="flex items-center gap-4 text-left">
                 {[
-                  { 
-                    label: "Instagram", url: "https://instagram.com/saglaboratory", 
-                    viewBox: "0 0 24 24",
-                    svg: <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /> 
-                  },
-                  { 
-                    label: "LinkedIn", url: "https://www.linkedin.com/company/sag-laboratory/", 
-                    viewBox: "0 0 512 512",
-                    svg: <path d="M150.65,100.68c0,27.99-22.69,50.68-50.68,50.68s-50.68-22.69-50.68-50.68C49.29,72.69,71.98,50,99.97,50s50.68,22.69,50.68,50.68z M150.65,191.63H49.29V462h101.36V191.63z M351.51,191.63c-22.69,0-43.03,8.08-58.82,22.13v-22.13H191.33V462h101.36V297.43c0-21.6,1.44-42.94,22.13-42.94c20.01,0,22.13,18.53,22.13,42.94V462H462V288.79C462,207.71,432.22,191.63,351.51,191.63z"/> 
-                  },
-                  { 
-                    label: "Email", url: "mailto:sag@telkomuniversity.ac.id", 
-                    viewBox: "0 0 24 24",
-                    svg: <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /> 
-                  }
+                  { label: "IG", url: "https://instagram.com/saglaboratory", svg: <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /> },
                 ].map((social, i) => (
-                  <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-black-600 p-2.5 bg-white shadow-sm">
-                    <svg width="100%" height="100%" viewBox={social.viewBox} fill="currentColor">
-                      {social.svg}
-                    </svg>
+                  <a key={i} href={social.url} target="_blank" className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-black-600 p-2.5 bg-white shadow-sm">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor">{social.svg}</svg>
                   </a>
                 ))}
               </div>
             </div>
-
-            {/* Navigation */}
-            <div className="flex flex-col items-start">
-              <h4 className="text-sag-blue text-xs font-black uppercase tracking-[0.3em] mb-10 opacity-40 text-left">
-                Navigation
-              </h4>
-              <nav className="flex flex-col gap-5 text-sm font-bold tracking-widest text-left capitalize">
-                <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Home
-                </Link>
-                <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  About
-                </Link>
-                <Link href="/study-group" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Study group
-                </Link>
-                <Link href="/research" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Research
-                </Link>
-                <Link href="/events" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Events
-                </Link>
+            <div className="flex flex-col items-start text-left">
+              <h4 className="text-sag-blue text-xs font-black uppercase tracking-[0.3em] mb-10 opacity-40 text-left">Navigation</h4>
+              <nav className="flex flex-col gap-5 text-sm font-bold tracking-widest text-left">
+                <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors uppercase">Home</Link>
+                <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors uppercase">About</Link>
+                <Link href="/study-group" className="text-blue-600 uppercase">Study Group</Link>
               </nav>
             </div>
-
-            {/* Contact */}
             <div className="flex flex-col items-start text-left">
-              <h4 className="text-sag-blue text-xs font-black uppercase tracking-[0.3em] mb-10 opacity-40">Contact</h4>
-              <div className="mb-8">
-                <p className="text-sag-blue font-black text-sm uppercase mb-3">SAG Laboratory</p>
-                <p className="text-gray-500 text-sm font-medium leading-loose max-w-[300px]">
-                  Jl. Telekomunikasi No.1, Sukapura, Kec. Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40267
-                </p>
-              </div>
-              <a href="mailto:sag@telkomuniversity.ac.id" className="text-black-600 font-bold text-sm border-b border-blue-600/20 hover:border-blue-600 pb-1 transition-all">
-                sag@telkomuniversity.ac.id
-              </a>
+              <h4 className="text-sag-blue text-xs font-black uppercase tracking-[0.3em] mb-10 opacity-40 text-left">Contact</h4>
+              <p className="text-sag-blue font-black text-sm uppercase mb-3 text-left">SAG Laboratory</p>
+              <p className="text-gray-500 text-sm font-medium leading-loose max-w-[300px] text-left">Jl. Telekomunikasi No.1, Bandung, Jawa Barat 40267</p>
+              <a href="mailto:sag@telkomuniversity.ac.id" className="text-blue-600 font-bold text-sm border-b border-blue-600/20 hover:border-blue-600 pb-1 transition-all">sag@telkomuniversity.ac.id</a>
             </div>
           </div>
-
-          <div className="mt-20 pt-10 border-t border-blue-100 flex justify-center items-center">
-            <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest text-center">
-              © 2026 SAG Laboratory Telkom University. All rights reserved.
-            </p>
+          <div className="mt-20 pt-10 border-t border-blue-100 flex justify-center text-center">
+            <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest">© 2026 SAG Laboratory Telkom University. All rights reserved.</p>
           </div>
         </div>
       </footer>

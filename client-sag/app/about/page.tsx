@@ -59,7 +59,7 @@ const CORE_TEAM = [
 const HEADS_TEAM = [
   { role: "Head of Digital Content", name: "Ilham Fahmi", image: "/Ditent.png" },
   { role: "Head of HCM", name: "Brigita Selva", image: "/Hcm.png" },
-  { role: "Head of Research", name: "Alya Davina", image: "/Reseearch.png" },
+  { role: "Head of Research", name: "Alya Davina", image: "/Research.png" },
   { role: "Head of Event & Competition", name: "Irfan Ubaidillah", image: "/Eventt.png" },
   { role: "Head of Study Group", name: "Fajriani Rahmanisa", image: "/Study group.png" },
 ];
