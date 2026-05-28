@@ -41,7 +41,7 @@ export default function StudyGroup() {
   }, []);
   const fetchActiveGroups = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/study-groups');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups`);
       const data = await response.json();
       const activeData = Array.isArray(data) ? data.filter((g: any) => g.status === 'Active') : [];
       setGroups(activeData as any);
@@ -57,7 +57,7 @@ export default function StudyGroup() {
     setError(false);
     setResult(null);
     try {
-      const response = await fetch(`http://localhost:8000/api/check-admission/${nim}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/check-admission/${nim}`);
       if (response.ok) {
         const data = await response.json();
         setResult(data);

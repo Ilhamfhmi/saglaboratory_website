@@ -224,7 +224,7 @@ export default function Home() {
   const fetchFeaturedEvents = async () => {
     try {
       setEventsLoading(true);
-      const response = await fetch(`http://localhost:8000/api/events?t=${Date.now()}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events?t=${Date.now()}`, {
         cache: "no-store",
         headers: { Accept: "application/json" },
       });
