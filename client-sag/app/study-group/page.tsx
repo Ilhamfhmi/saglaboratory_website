@@ -4,32 +4,30 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AOS from "aos";
 import "aos/dist/aos.css";
-
 // ─── Constants: Pillar SAG ──────────────────────────────────────────────────
 const STUDY_ROLES = [
   {
     title: "Enterprise Architecture",
     desc: "Mempelajari perancangan struktur organisasi yang menyelaraskan strategi bisnis dengan infrastruktur IT.",
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" /></svg>,
     color: "text-blue-600",
     bgColor: "bg-blue-50"
   },
   {
     title: "Business Process",
     desc: "Fokus pada pemetaan, analisis, dan optimasi alur kerja organisasi untuk mencapai efisiensi maksimal.",
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>,
     color: "text-emerald-600",
     bgColor: "bg-emerald-50"
   },
   {
     title: "IT Governance",
     desc: "Mendalami tata kelola IT untuk memastikan investasi teknologi memberikan nilai bisnis bagi organisasi.",
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l8 4v6c0 5-4 9-8 10-4-1-8-5-8-10V6l8-4z"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l8 4v6c0 5-4 9-8 10-4-1-8-5-8-10V6l8-4z" /></svg>,
     color: "text-purple-600",
     bgColor: "bg-purple-50"
   }
 ];
-
 export default function StudyGroup() {
   const [nim, setNim] = useState('');
   const [result, setResult] = useState<any>(null);
@@ -37,12 +35,10 @@ export default function StudyGroup() {
   const [checkLoading, setCheckLoading] = useState(false);
   const [groups, setGroups] = useState([]);
   const [groupsLoading, setGroupsLoading] = useState(true);
-
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
     fetchActiveGroups();
   }, []);
-
   const fetchActiveGroups = async () => {
     try {
       const response = await fetch('http://localhost:8000/api/study-groups');
@@ -55,13 +51,11 @@ export default function StudyGroup() {
       setGroupsLoading(false);
     }
   };
-
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
     setCheckLoading(true);
     setError(false);
     setResult(null);
-
     try {
       const response = await fetch(`http://localhost:8000/api/check-admission/${nim}`);
       if (response.ok) {
@@ -76,10 +70,8 @@ export default function StudyGroup() {
       setCheckLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-white font-jakarta pt-20 overflow-x-hidden text-sag-blue text-left">
-      
       {/* ── SECTION 1: HERO ── */}
       <section className="py-24 md:py-44 px-6 md:px-24 bg-sag-blue text-white relative overflow-hidden flex items-center justify-center text-center">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -94,7 +86,6 @@ export default function StudyGroup() {
           </p>
         </div>
       </section>
-
       {/* ── SECTION 2: PILLARS ── */}
       <section className="py-32 px-6 md:px-24 container mx-auto text-left">
         <div className="text-center mb-20" data-aos="fade-up">
@@ -113,7 +104,6 @@ export default function StudyGroup() {
           ))}
         </div>
       </section>
-
       {/* ── SECTION 3: ACTIVE GROUPS ── */}
       <section className="py-32 px-6 md:px-24 bg-[#F8FAFC] border-y border-gray-100 text-left">
         <div className="container mx-auto max-w-7xl">
@@ -133,7 +123,6 @@ export default function StudyGroup() {
               </p>
             </div>
           </div>
-
           {groupsLoading ? (
             <div className="py-32 text-center">
               <div className="inline-block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -146,11 +135,11 @@ export default function StudyGroup() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
               {groups.map((group: any, i) => (
-                <Link 
-                  href={`/study-group/${group.id}`} 
-                  key={i} 
-                  data-aos="fade-up" 
-                  data-aos-delay={i * 100} 
+                <Link
+                  href={`/study-group/${group.id}`}
+                  key={i}
+                  data-aos="fade-up"
+                  data-aos-delay={i * 100}
                   className="group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 hover:border-blue-500/30 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(37,99,235,0.1)] flex flex-col h-full text-left"
                 >
                   <div className="relative h-72 w-full overflow-hidden bg-gray-100">
@@ -164,24 +153,21 @@ export default function StudyGroup() {
                   <div className="p-10 space-y-6 flex flex-col flex-grow text-left">
                     <div className="space-y-3 text-left">
                       <h4 className="text-2xl font-black text-sag-blue uppercase tracking-tighter leading-tight group-hover:text-blue-600 transition-colors duration-300 line-clamp-2 text-left">{group.title}</h4>
-                      
-                      {/* FIX: GANTI HURUF DENGAN IKON ORANG */}
                       <div className="flex items-center gap-3 text-left">
-                         <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm border border-blue-50">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                         </div>
-                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Lead by {group.leader}</span>
+                        <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm border border-blue-50">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                          </svg>
+                        </div>
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Lead by {group.leader}</span>
                       </div>
-
                     </div>
                     <p className="text-gray-500 text-xs font-bold leading-relaxed opacity-70 line-clamp-3 text-left">{group.description}</p>
                     <div className="pt-6 mt-auto border-t border-gray-50 flex justify-between items-center text-left">
                       <span className="text-[9px] font-black text-blue-600 uppercase tracking-[0.2em]">In Progress</span>
                       <svg className="w-5 h-5 text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div>
                   </div>
@@ -193,47 +179,94 @@ export default function StudyGroup() {
       </section>
 
       {/* ── SECTION 4: ADMISSION CHECK ── */}
-      <section className="py-40 px-6 md:px-24 bg-white relative text-left">
-        <div className="max-w-xl mx-auto">
-          <div className="text-center mb-14" data-aos="fade-up">
-            <h2 className="text-4xl font-black uppercase tracking-tighter text-sag-blue text-center">Cek Kelulusan</h2>
-            <p className="text-gray-400 text-[10px] mt-4 font-black uppercase tracking-[0.4em] text-center">Admission Status 2026</p>
+      <section className="py-40 px-6 md:px-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `radial-gradient(#2563eb 1px, transparent 1px)`, backgroundSize: "36px 36px" }} />
+        <div className="max-w-xl mx-auto relative z-10">
+
+          <div className="text-center mb-12" data-aos="fade-up">
+            <h2 className="text-4xl font-black uppercase tracking-tighter text-sag-blue mb-2">Cek Kelulusan</h2>
+            <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.4em]">Admission Status 2026</p>
           </div>
-          <div className="bg-white p-10 md:p-14 rounded-[3.5rem] shadow-2xl shadow-blue-900/10 border border-gray-100" data-aos="fade-up">
-            <form onSubmit={handleCheck} className="space-y-8">
-              <div className="space-y-4 text-left">
-                <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 ml-1 text-left">Nomor Induk Mahasiswa (NIM)</label>
-                <input 
-                  type="text" value={nim} onChange={(e) => setNim(e.target.value)}
-                  placeholder="120222XXXX"
-                  className="w-full px-8 py-5 rounded-2xl bg-gray-50 border border-gray-100 focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-600 outline-none transition-all font-black text-xl placeholder:text-gray-200"
-                  required
-                />
+
+          <div data-aos="fade-up" data-aos-delay="100" className="bg-white rounded-[2.5rem] border border-gray-100 shadow-[0_30px_80px_rgba(37,99,235,0.08)] p-10">
+
+            {/* Card header */}
+            <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-50">
+              <div className="w-12 h-12 bg-sag-blue rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
               </div>
-              <button disabled={checkLoading} type="submit" className="w-full bg-blue-600 text-white py-6 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 disabled:opacity-50">
-                {checkLoading ? 'Processing...' : 'Verify Status'}
+              <div className="text-left">
+                <p className="text-sag-blue font-black text-sm uppercase tracking-tight">Admission Checker</p>
+                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">SAG Laboratory · 2026</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleCheck} className="space-y-5">
+              <div className="space-y-2 text-left">
+                <label className="block text-[10px] font-black uppercase tracking-[0.25em] text-blue-600">Nomor Induk Mahasiswa (NIM)</label>
+                <div className="relative">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" /></svg>
+                  </div>
+                  <input
+                    type="text"
+                    value={nim}
+                    onChange={(e) => setNim(e.target.value)}
+                    placeholder="120222XXXX"
+                    className="w-full pl-14 pr-6 py-5 rounded-2xl bg-gray-50 border border-gray-100 focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-600 outline-none transition-all font-black text-xl placeholder:text-gray-200 text-sag-blue"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                disabled={checkLoading}
+                type="submit"
+                className="w-full bg-sag-blue text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-blue-700 transition-all duration-300 shadow-xl shadow-blue-100/50 disabled:opacity-50 flex items-center justify-center gap-3 group"
+              >
+                {checkLoading ? (
+                  <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Memverifikasi...</>
+                ) : (
+                  <>Cek Sekarang <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:translate-x-1"><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
+                )}
               </button>
             </form>
+
             {(result || error) && (
-              <div className="mt-12 pt-12 border-t border-gray-100 animate-in fade-in slide-in-from-top-4 duration-500">
+              <div className="mt-6 pt-6 border-t border-gray-50">
                 {result && (
-                  <div className="bg-green-50 border border-green-100 p-10 rounded-[2.5rem] text-left">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg"><svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="4" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-green-600">Terpilih</span>
+                  <div className="bg-green-50 border border-green-100 rounded-2xl p-6 text-left">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+                      </div>
+                      <div>
+                        <p className="text-green-700 font-black text-xs uppercase tracking-widest">Selamat! Kamu Lolos</p>
+                        <p className="text-green-500 text-[10px] font-bold uppercase tracking-wider mt-0.5">SAG Study Group 2026</p>
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-black uppercase text-gray-900 mb-2 leading-none text-left">{result.name}</h3>
-                    <p className="text-gray-400 text-[11px] font-black uppercase mb-8 tracking-widest text-left">Role: {result.role}</p>
-                    <div className="bg-white p-6 rounded-2xl border border-green-100 text-[13px] font-bold text-gray-600 leading-relaxed text-left">
-                      Selamat! Anda lolos sebagai anggota SAG Study Group. Segera konfirmasi kehadiran melalui koordinator divisi.
+                    <div className="bg-white rounded-xl border border-green-100 p-5 space-y-3 mb-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">Nama</span>
+                        <span className="text-sag-blue font-black text-sm">{result.name}</span>
+                      </div>
+                      <div className="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">Role</span>
+                        <span className="text-blue-600 font-black text-sm">{result.role}</span>
+                      </div>
                     </div>
+                    <p className="text-green-600/70 text-xs font-medium leading-relaxed">
+                      Segera konfirmasi kehadiran melalui koordinator divisi SAG Laboratory.
+                    </p>
                   </div>
                 )}
                 {error && (
-                  <div className="bg-red-50 border border-red-100 p-10 rounded-[2.5rem] text-center">
-                    <div className="w-14 h-14 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 font-black text-xl text-center">!</div>
-                    <h3 className="text-red-900 font-black uppercase text-base mb-2 text-center">NIM Tidak Ditemukan</h3>
-                    <p className="text-red-600/70 text-[10px] font-black uppercase tracking-widest text-center">Silakan hubungi admin laboratorium.</p>
+                  <div className="bg-red-50 border border-red-100 rounded-2xl p-6 text-center">
+                    <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
+                    </div>
+                    <h3 className="text-red-800 font-black uppercase text-sm mb-1">NIM Tidak Ditemukan</h3>
+                    <p className="text-red-400 text-[10px] font-black uppercase tracking-widest">Silakan hubungi admin laboratorium.</p>
                   </div>
                 )}
               </div>
@@ -257,7 +290,7 @@ export default function StudyGroup() {
               <div className="flex items-center gap-4 text-left">
                 {[
                   { label: "Instagram", url: "https://instagram.com/saglaboratory", viewBox: "0 0 24 24", svg: <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /> },
-                  { label: "LinkedIn", url: "https://www.linkedin.com/company/sag-laboratory/", viewBox: "0 0 512 512", svg: <path d="M150.65,100.68c0,27.99-22.69,50.68-50.68,50.68s-50.68-22.69-50.68-50.68C49.29,72.69,71.98,50,99.97,50s50.68,22.69,50.68,50.68z M150.65,191.63H49.29V462h101.36V191.63z M351.51,191.63c-22.69,0-43.03,8.08-58.82,22.13v-22.13H191.33V462h101.36V297.43c0-21.6,1.44-42.94,22.13-42.94c20.01,0,22.13,18.53,22.13,42.94V462H462V288.79C462,207.71,432.22,191.63,351.51,191.63z"/> },
+                  { label: "LinkedIn", url: "https://www.linkedin.com/company/sag-laboratory/", viewBox: "0 0 512 512", svg: <path d="M150.65,100.68c0,27.99-22.69,50.68-50.68,50.68s-50.68-22.69-50.68-50.68C49.29,72.69,71.98,50,99.97,50s50.68,22.69,50.68,50.68z M150.65,191.63H49.29V462h101.36V191.63z M351.51,191.63c-22.69,0-43.03,8.08-58.82,22.13v-22.13H191.33V462h101.36V297.43c0-21.6,1.44-42.94,22.13-42.94c20.01,0,22.13,18.53,22.13,42.94V462H462V288.79C462,207.71,432.22,191.63,351.51,191.63z" /> },
                   { label: "Email", url: "mailto:sag@telkomuniversity.ac.id", viewBox: "0 0 24 24", svg: <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /> }
                 ].map((social, i) => (
                   <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-black-600 p-2.5 bg-white shadow-sm text-left">

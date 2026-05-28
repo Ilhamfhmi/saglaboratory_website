@@ -9,11 +9,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Pastikan href di sini 100% sama dengan nama folder kamu di app/events
   const menuItems = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Events', href: '/events' }, // Diubah namanya jadi Events agar konsisten
+    { name: 'Events', href: '/events' },
     { name: 'Study Group', href: '/study-group' },
     { name: 'Research', href: '/research' },
   ];
@@ -21,20 +20,39 @@ export default function Navbar() {
   return (
     <nav className="bg-white/95 backdrop-blur-md text-gray-800 py-3 px-8 shadow-sm fixed w-full top-0 z-[100] transition-all h-20 flex items-center font-jakarta text-left">
       <div className="container mx-auto flex justify-between items-center relative h-full">
-        
-        {/* LOGO SECTION */}
+
+        {/* LOGO SECTION (Updated with Dual Logo: SAG x ISG) */}
         <div className="flex-shrink-0 flex items-center z-[110]">
-          <Link href="/" className="group relative">
-            <div className="absolute -top-12 left-0 w-28 h-28 md:w-36 md:h-36 transition-transform duration-300 group-hover:scale-110 drop-shadow-2xl">
-              <Image 
-                src="/logo-sag.png" 
-                alt="SAG Laboratory Logo"
-                fill
-                className="object-contain"
-                priority  
-              />
+          <Link href="/" className="group relative flex items-center gap-3">
+            {/* Wadah Gambar Logo Bersama */}
+            <div className="absolute -top-12 left-0 flex items-center gap-4 transition-transform duration-300 group-hover:scale-110 drop-shadow-2xl">
+              {/* Logo SAG */}
+              <div className="relative w-28 h-28 md:w-36 md:h-36">
+                <Image
+                  src="/logo-sag.png"
+                  alt="SAG Laboratory Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
+              {/* Garis Pembatas Vertikal */}
+              <div className="h-10 md:h-12 w-[1.5px] bg-gray-300/80 -mt-1"></div>
+
+              {/* Logo ISG */}
+              <div className="relative w-18 h-18 md:w-24 md:h-24 -ml-1">
+                <Image
+                  src="/logo-isg2.png"
+                  alt="ISG Telkom University Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </div>
-            <div className="w-28 h-10 md:w-36 md:h-12"></div>
+            {/* Spacer transparan agar lebar area klik Link tetap terjaga presisi */}
+            <div className="w-44 h-10 md:w-56 md:h-12"></div>
           </Link>
         </div>
 
@@ -42,16 +60,14 @@ export default function Navbar() {
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center bg-gray-100/50 border border-gray-200/50 p-1 rounded-full overflow-hidden">
           <div className="flex items-center relative uppercase tracking-widest text-[10px] font-black">
             {menuItems.map((item) => {
-              // Logika pengecekan active yang lebih akurat
               const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-              
+
               return (
-                <Link 
-                  key={item.name} 
-                  href={item.href} 
-                  className={`relative px-5 py-2 transition-colors duration-300 rounded-full z-10 ${
-                    isActive ? "text-white" : "text-gray-500 hover:text-sag-blue"
-                  }`}
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`relative px-5 py-2 transition-colors duration-300 rounded-full z-10 ${isActive ? "text-white" : "text-gray-500 hover:text-sag-blue"
+                    }`}
                 >
                   <span className="relative z-20">{item.name}</span>
                   {isActive && (
@@ -69,8 +85,8 @@ export default function Navbar() {
 
         {/* LOGIN SECTION */}
         <div className="hidden md:block flex-shrink-0 z-[110]">
-          <Link 
-            href="/login" 
+          <Link
+            href="/login"
             className="bg-sag-blue text-white px-8 py-2.5 rounded-xl font-bold hover:bg-blue-800 transition-all shadow-md text-sm active:scale-95"
           >
             Login
@@ -78,7 +94,7 @@ export default function Navbar() {
         </div>
 
         {/* MOBILE HAMBURGER */}
-        <button 
+        <button
           className="md:hidden z-[110] p-2 text-gray-600 focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -94,17 +110,16 @@ export default function Navbar() {
           {menuItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
             return (
-              <Link 
-                key={item.name} 
-                href={item.href} 
+              <Link
+                key={item.name}
+                href={item.href}
                 onClick={() => setIsOpen(false)}
-                className={`text-2xl font-black transition-colors tracking-tighter uppercase relative ${
-                  isActive ? "text-sag-blue" : "text-gray-800"
-                }`}
+                className={`text-2xl font-black transition-colors tracking-tighter uppercase relative ${isActive ? "text-sag-blue" : "text-gray-800"
+                  }`}
               >
                 {item.name}
                 {isActive && (
-                  <motion.div 
+                  <motion.div
                     layoutId="activeUnderlineMobile"
                     className="absolute -bottom-2 left-0 right-0 h-1 bg-sag-blue rounded-full"
                   />
@@ -112,8 +127,8 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <Link 
-            href="/login" 
+          <Link
+            href="/login"
             onClick={() => setIsOpen(false)}
             className="bg-sag-blue text-white px-12 py-4 rounded-2xl font-bold shadow-lg text-lg"
           >
