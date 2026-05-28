@@ -28,11 +28,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json" 
+          "Accept": "application/json"
         },
         body: JSON.stringify({ email, password }),
       });
@@ -42,13 +42,13 @@ export default function LoginPage() {
       if (response.ok) {
         localStorage.setItem("sag_token", data.token);
         localStorage.setItem("sag_user", JSON.stringify(data.user));
-        
+
         if (rememberMe) {
           localStorage.setItem("sag_admin_email", email);
         } else {
           localStorage.removeItem("sag_admin_email");
         }
-        
+
         router.push("/admin/dashboard");
       } else {
         alert(data.message || "Login gagal. Cek kembali email dan password.");
@@ -63,15 +63,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white font-jakarta flex overflow-hidden">
-      
+
       {/* ─── LEFT SIDE: LOGIN FORM ─── */}
       <div className="w-full lg:w-[42%] min-h-screen flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-white relative">
-        
+
         <Link href="/" className="absolute top-6 left-6 lg:top-10 lg:left-10 z-20 group text-left">
           <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100 text-gray-500 transition-all duration-300 group-hover:bg-white group-hover:border-blue-200 group-hover:shadow-md group-hover:text-[#013599]">
             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm transition-transform group-hover:-translate-x-1">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </div>
             <span className="text-[10px] font-black uppercase tracking-[0.2em]">Beranda</span>
@@ -91,8 +91,8 @@ export default function LoginPage() {
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="text-left">
               <label className="block text-[11px] font-black uppercase tracking-widest text-gray-400 mb-2 ml-1">Email</label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-4 focus:ring-blue-50 focus:border-[#013599] outline-none transition-all font-bold text-[#013599] shadow-sm placeholder:text-gray-300 placeholder:font-medium"
@@ -106,7 +106,7 @@ export default function LoginPage() {
                 <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Password</label>
               </div>
               <div className="relative">
-                <input 
+                <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -145,28 +145,28 @@ export default function LoginPage() {
         </div>
 
         <div className="absolute bottom-8 left-6 lg:left-10 text-gray-300 text-[9px] font-black uppercase tracking-[0.3em] text-left">
-            Authorized Access Only — SAG Lab © 2026
+          Authorized Access Only — SAG Lab © 2026
         </div>
       </div>
 
       {/* ─── RIGHT SIDE: GRADIENT + OVERLAY RESTORED ─── */}
       <div className="hidden lg:flex lg:w-[58%] relative flex-col justify-center overflow-hidden text-left p-12 md:p-20">
-        
+
         {/* Base Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-[#013599] to-blue-900" />
-        
+
         {/* Overlay Pattern (Restored with Safe Quote) */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" />
-        
+
         {/* Depth Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
-        
+
         {/* Blurry Glows */}
         <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-blue-400/20 blur-[120px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[40%] bg-cyan-400/15 blur-[80px] rounded-full" />
 
         <div className="relative z-10 w-full max-w-4xl pt-6 text-left" data-aos="fade-left">
-          
+
           {/* Logo Section */}
           <div className="flex items-center gap-8 mb-10 text-left">
             <div className="relative w-44 h-16 brightness-0 invert opacity-90">
@@ -182,42 +182,42 @@ export default function LoginPage() {
           <h2 className="text-white text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.95] mb-8 text-left text-balance">
             Innovating System, <br /> <span className="text-blue-300">Empowering Tomorrow.</span>
           </h2>
-          
+
           {/* Paragraph */}
           <p className="text-blue-100/70 text-lg md:text-xl font-medium leading-relaxed mb-14 text-left max-w-3xl">
             Administrator Portal: Kelola infrastruktur data, arsitektur enterprise, dan tata kelola teknologi laboratorium secara terpadu.
           </p>
-          
+
           {/* Stats Card - GRADIENT FIX APPLIED */}
           <div className="relative text-left max-w-3xl">
             <div className="bg-gradient-to-br from-white/15 via-white/5 to-transparent backdrop-blur-xl rounded-tl-[4rem] rounded-br-[4rem] rounded-tr-2xl rounded-bl-2xl p-12 shadow-2xl relative overflow-hidden border border-white/20 text-left">
-                {/* Internal Glow Orb */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full translate-x-10 -translate-y-10 blur-2xl" />
-                
-                <div className="relative z-10 text-left">
-                    <h4 className="text-white text-2xl font-black leading-tight mb-8 uppercase tracking-tighter">
-                        System Architecture <br /> Governance Laboratory
-                    </h4>
-                    
-                    <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/20 text-left">
-                        <div className="text-left">
-                            <div className="text-4xl font-black text-white leading-none tracking-tighter">50+</div>
-                            <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">Members</div>
-                        </div>
-                        <div className="text-left">
-                            <div className="text-4xl font-black text-white leading-none tracking-tighter">12+</div>
-                            <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">Projects</div>
-                        </div>
-                        <div className="text-left">
-                            <div className="text-4xl font-black text-white leading-none tracking-tighter">V3.0</div>
-                            <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">System</div>
-                        </div>
-                    </div>
+              {/* Internal Glow Orb */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full translate-x-10 -translate-y-10 blur-2xl" />
+
+              <div className="relative z-10 text-left">
+                <h4 className="text-white text-2xl font-black leading-tight mb-8 uppercase tracking-tighter">
+                  System Architecture <br /> Governance Laboratory
+                </h4>
+
+                <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/20 text-left">
+                  <div className="text-left">
+                    <div className="text-4xl font-black text-white leading-none tracking-tighter">50+</div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">Members</div>
+                  </div>
+                  <div className="text-left">
+                    <div className="text-4xl font-black text-white leading-none tracking-tighter">12+</div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">Projects</div>
+                  </div>
+                  <div className="text-left">
+                    <div className="text-4xl font-black text-white leading-none tracking-tighter">V3.0</div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mt-3">System</div>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Border Accent */}
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
       </div>

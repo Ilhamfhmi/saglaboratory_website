@@ -24,7 +24,7 @@ export default function EventsAdminPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/events?t=${Date.now()}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events?t=${Date.now()}`);
       const data = await response.json();
       setEvents(data);
     } catch (error) {
@@ -39,7 +39,7 @@ export default function EventsAdminPage() {
 
     try {
       const token = localStorage.getItem("sag_token");
-      const response = await fetch(`http://localhost:8000/api/events/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -61,7 +61,7 @@ export default function EventsAdminPage() {
           <h1 className="text-3xl font-black text-sag-blue uppercase tracking-tighter">Events Management</h1>
           <p className="text-gray-400 font-medium text-sm">Kelola jadwal webinar, workshop, dan agenda SAG Laboratory.</p>
         </div>
-        
+
         <Link href="/admin/events/add" className="bg-sag-blue text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-100 hover:bg-blue-800 transition-all flex items-center gap-3 w-fit">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" /></svg>
           Add New Event
@@ -90,11 +90,11 @@ export default function EventsAdminPage() {
                   <tr key={event.id} className="group hover:bg-gray-50/30 transition-colors">
                     <td className="p-8 w-32">
                       <div className="w-20 aspect-[3/4] rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
-                        <img 
-                          src={event.image_url} 
-                          alt="Poster" 
+                        <img
+                          src={event.image_url}
+                          alt="Poster"
                           className="w-full h-full object-cover"
-                          onError={(e) => {(e.target as HTMLImageElement).src = 'https://via.placeholder.com/150'}}
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150' }}
                         />
                       </div>
                     </td>
@@ -111,11 +111,11 @@ export default function EventsAdminPage() {
                     <td className="p-8 text-sm">
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 font-bold text-sag-blue">
-                          <svg className="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                          <svg className="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           {new Date(event.event_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 font-medium">
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                           {event.location}
                         </div>
                       </div>

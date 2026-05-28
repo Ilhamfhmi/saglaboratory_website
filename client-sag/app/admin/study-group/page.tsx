@@ -25,11 +25,11 @@ export default function StudyGroupAdminPage() {
 
   const fetchGroups = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/study-groups?t=${Date.now()}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups?t=${Date.now()}`, {
         headers: { "Accept": "application/json" }
       });
       const data = await response.json();
-      
+
       if (Array.isArray(data)) {
         setGroups(data);
       } else if (data && Array.isArray(data.data)) {
@@ -50,11 +50,11 @@ export default function StudyGroupAdminPage() {
 
     try {
       const token = localStorage.getItem("sag_token");
-      const response = await fetch(`http://localhost:8000/api/study-groups/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups/${id}`, {
         method: "DELETE",
-        headers: { 
+        headers: {
           "Authorization": `Bearer ${token}`,
-          "Accept": "application/json" 
+          "Accept": "application/json"
         }
       });
 
@@ -75,7 +75,7 @@ export default function StudyGroupAdminPage() {
           <h1 className="text-3xl font-black text-sag-blue uppercase tracking-tighter">Study Group Management</h1>
           <p className="text-gray-400 font-medium text-sm">Kelola pilar riset: Enterprise Architecture, Business Process, dan IT Governance.</p>
         </div>
-        
+
         <Link href="/admin/study-group/add" className="bg-sag-blue text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-100 hover:bg-blue-800 transition-all flex items-center gap-3 w-fit">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" /></svg>
           Add New Group
@@ -105,11 +105,11 @@ export default function StudyGroupAdminPage() {
                     {/* Cover Column */}
                     <td className="p-8 w-32">
                       <div className="w-20 aspect-square rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
-                        <img 
-                          src={group.image_url} 
-                          alt="Cover" 
+                        <img
+                          src={group.image_url}
+                          alt="Cover"
                           className="w-full h-full object-cover"
-                          onError={(e) => {(e.target as HTMLImageElement).src = 'https://via.placeholder.com/150'}}
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150' }}
                         />
                       </div>
                     </td>
@@ -141,11 +141,10 @@ export default function StudyGroupAdminPage() {
                           <span className="text-sm font-bold uppercase tracking-tight">{group.leader}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                            group.status === 'Active' 
-                            ? 'bg-green-50 text-green-600' 
+                          <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${group.status === 'Active'
+                            ? 'bg-green-50 text-green-600'
                             : 'bg-gray-100 text-gray-400'
-                          }`}>
+                            }`}>
                             {group.status}
                           </span>
                         </div>

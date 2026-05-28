@@ -19,7 +19,7 @@ interface StudyGroupItem {
 export default function StudyGroupDetailPage() {
   const params = useParams();
   const id = params?.id;
-  
+
   const [group, setGroup] = useState<StudyGroupItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -35,7 +35,7 @@ export default function StudyGroupDetailPage() {
   const fetchGroupDetail = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8000/api/study-groups/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups/${id}`, {
         cache: "no-store",
         headers: { "Accept": "application/json" },
       });
@@ -45,7 +45,7 @@ export default function StudyGroupDetailPage() {
       const data = await response.json();
 
       if (data.image_url && !data.image_url.startsWith('http')) {
-        data.image_url = `http://localhost:8000/storage/${data.image_url}`;
+        data.image_url = `${process.env.NEXT_PUBLIC_API_URL}/storage/${data.image_url}`;
       }
 
       setGroup(data);
@@ -94,12 +94,12 @@ export default function StudyGroupDetailPage() {
 
   return (
     <div className="min-h-screen bg-white font-jakarta text-left">
-      
+
       {/* ─── HEADER SECTION ─── */}
       <div className="bg-white pt-28 pb-4 md:pt-36 md:pb-6">
         <div className="container mx-auto px-6 text-left">
-          <Link 
-            href="/study-group" 
+          <Link
+            href="/study-group"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-[#013599] transition-colors mb-10 group font-semibold text-sm uppercase tracking-widest"
           >
             <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -107,10 +107,10 @@ export default function StudyGroupDetailPage() {
             </svg>
             Kembali ke Study Groups
           </Link>
-          
+
           <div className="max-w-3xl text-left" data-aos="fade-up">
             <span className="inline-block px-4 py-1.5 bg-blue-50 text-[#013599] font-bold text-[10px] uppercase tracking-[0.2em] rounded-lg mb-4 border border-blue-100">
-                Detail Study Group
+              Detail Study Group
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-gray-900 tracking-tight uppercase">
               {group.title}
@@ -122,7 +122,7 @@ export default function StudyGroupDetailPage() {
       {/* ─── CONTENT SECTION ─── */}
       <div className="container mx-auto px-6 py-6 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          
+
           <div className="space-y-8" data-aos="fade-right">
             <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-100">
               <div className="relative aspect-[4/3]">
@@ -222,8 +222,8 @@ export default function StudyGroupDetailPage() {
             </div>
 
             <div className="pt-4 text-left">
-              <Link 
-                href="/study-group/register" 
+              <Link
+                href="/study-group/register"
                 className="group relative w-full inline-flex items-center justify-center gap-4 bg-[#013599] text-white px-8 py-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] hover:bg-blue-800 transition-all duration-300 shadow-2xl shadow-blue-900/30 transform hover:-translate-y-1 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>

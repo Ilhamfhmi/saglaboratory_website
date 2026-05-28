@@ -21,7 +21,7 @@ interface EventItem {
 export default function EventDetailPage() {
   const params = useParams();
   const id = params?.id;
-  
+
   const [event, setEvent] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -38,7 +38,7 @@ export default function EventDetailPage() {
     try {
       setLoading(true);
       // Mengambil data langsung dari endpoint API Laravel
-      const response = await fetch(`http://localhost:8000/api/events/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`, {
         cache: "no-store",
         headers: {
           "Accept": "application/json",
@@ -81,8 +81,8 @@ export default function EventDetailPage() {
           <p className="text-gray-500 mb-8">
             Maaf, detail kegiatan yang Anda cari tidak dapat ditemukan di database.
           </p>
-          <Link 
-            href="/events" 
+          <Link
+            href="/events"
             className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,11 +98,11 @@ export default function EventDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 py-16 md:py-24">
-        
+
         {/* Back Button */}
         <div className="mb-8" data-aos="fade-right">
-          <Link 
-            href="/events" 
+          <Link
+            href="/events"
             className="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors group"
           >
             <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@ export default function EventDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          
+
           {/* Left Column - Image (Menggunakan img standar agar gambar localhost tampil) */}
           <div className="space-y-6" data-aos="fade-right">
             <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-lg border border-gray-200">
@@ -170,11 +170,11 @@ export default function EventDetailPage() {
                   <h3 className="font-semibold text-gray-500 text-sm uppercase tracking-wide">Tanggal</h3>
                 </div>
                 <p className="text-xl font-bold text-gray-800">
-                  {new Date(event.event_date).toLocaleDateString('id-ID', { 
-                    weekday: 'long', 
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric' 
+                  {new Date(event.event_date).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
                   })}
                 </p>
               </div>

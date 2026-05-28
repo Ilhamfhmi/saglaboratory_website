@@ -9,7 +9,7 @@ export default function EditStudyGroup() {
   const router = useRouter();
   const { id } = useParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -25,15 +25,15 @@ export default function EditStudyGroup() {
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
-    
+
     const fetchOldData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/study-groups/${id}?t=${Date.now()}`, {
-           headers: { "Accept": "application/json" }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups/${id}?t=${Date.now()}`, {
+          headers: { "Accept": "application/json" }
         });
         if (!response.ok) throw new Error("Gagal mengambil data");
         const data = await response.json();
-        
+
         setFormData({
           title: data.title || "",
           category: data.category || "Enterprise Architecture",
@@ -72,24 +72,24 @@ export default function EditStudyGroup() {
     setSubmitting(true);
 
     const data = new FormData();
-    data.append("_method", "PUT"); 
+    data.append("_method", "PUT");
     data.append("title", formData.title);
     data.append("category", formData.category);
     data.append("description", formData.description);
     data.append("leader", formData.leader);
     data.append("status", formData.status);
-    
+
     if (selectedFile) {
       data.append("image", selectedFile);
     }
 
     try {
       const token = localStorage.getItem("sag_token");
-      const response = await fetch(`http://localhost:8000/api/study-groups/${id}`, {
-        method: "POST", 
-        headers: { 
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups/${id}`, {
+        method: "POST",
+        headers: {
           "Authorization": `Bearer ${token}`,
-          "Accept": "application/json" 
+          "Accept": "application/json"
         },
         body: data,
       });
@@ -119,13 +119,13 @@ export default function EditStudyGroup() {
       <div className="container mx-auto px-6 max-w-7xl">
         <Link href="/admin/study-group" className="text-gray-400 hover:text-blue-600 transition-all mb-8 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest group">
           <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           Cancel and Back
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
+
           {/* ─── LEFT SIDE: FORM ─── */}
           <div className="lg:col-span-7 space-y-10" data-aos="fade-right">
             <div className="text-left">
@@ -136,10 +136,10 @@ export default function EditStudyGroup() {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-2 text-left">
                 <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Research Pillar / Category</label>
-                <select 
-                  name="category" 
-                  value={formData.category} 
-                  onChange={handleChange} 
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
                   className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold focus:ring-2 focus:ring-blue-600 outline-none text-sag-blue"
                 >
                   <option value="Enterprise Architecture">Enterprise Architecture</option>
@@ -178,9 +178,9 @@ export default function EditStudyGroup() {
                   <span className="text-[10px] font-bold text-gray-400 max-w-[150px] truncate text-left">
                     {selectedFile ? selectedFile.name : "Current cover active"}
                   </span>
-                  <button 
-                    type="button" 
-                    onClick={() => fileInputRef.current?.click()} 
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
                     className="px-5 py-2.5 bg-blue-600 text-white text-[10px] font-black uppercase rounded-full hover:bg-blue-700 transition-all shadow-md active:scale-95"
                   >
                     Choose Cover
@@ -189,9 +189,9 @@ export default function EditStudyGroup() {
                 </div>
               </div>
 
-              <button 
-                type="submit" 
-                disabled={submitting} 
+              <button
+                type="submit"
+                disabled={submitting}
                 className={`w-full py-6 rounded-full font-black uppercase tracking-[0.2em] text-white text-[12px] transition-all shadow-xl ${submitting ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-100'}`}
               >
                 {submitting ? "Updating..." : "Save Research Changes"}
@@ -202,10 +202,10 @@ export default function EditStudyGroup() {
           {/* ─── RIGHT SIDE: PREVIEW ─── */}
           <div className="lg:col-span-5 sticky top-32 text-left" data-aos="fade-left">
             <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-6 text-left">Card Live Preview</h2>
-            
+
             <div className="max-w-[380px]">
               <div className="bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-2xl shadow-gray-200/50 group text-left">
-                
+
                 <div className="relative h-72 w-full overflow-hidden bg-gray-100">
                   {preview ? (
                     <img src={preview} alt="Preview" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -223,13 +223,13 @@ export default function EditStudyGroup() {
                   <h3 className="text-xl font-black text-sag-blue leading-tight uppercase tracking-tighter line-clamp-2 text-left">
                     {formData.title || "Untitled Research"}
                   </h3>
-                  
+
                   <div className="flex items-center gap-2 text-left">
                     <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm border border-blue-50">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
                     </div>
                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Lead by {formData.leader || "Leader Name"}</span>
                   </div>

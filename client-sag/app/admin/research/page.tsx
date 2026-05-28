@@ -20,7 +20,7 @@ export default function ResearchAdmin() {
   const fetchResearch = async () => {
     try {
       // Tambahkan nocache agar data selalu fresh saat admin buka halaman
-      const response = await fetch(`http://localhost:8000/api/research?t=${Date.now()}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research?t=${Date.now()}`, {
         headers: {
           "Accept": "application/json"
         }
@@ -40,7 +40,7 @@ export default function ResearchAdmin() {
 
     try {
       const token = localStorage.getItem("sag_token");
-      const response = await fetch(`http://localhost:8000/api/research/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -72,7 +72,7 @@ export default function ResearchAdmin() {
           <h1 className="text-3xl font-black text-sag-blue uppercase tracking-tighter">Research Management</h1>
           <p className="text-gray-400 font-medium">Kelola publikasi dan artikel penelitian laboratorium SAG.</p>
         </div>
-        
+
         <Link href="/admin/research/add" className="bg-sag-blue text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-100 hover:bg-blue-800 hover:-translate-y-1 transition-all flex items-center gap-3 w-fit">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" /></svg>
           Add New Research
@@ -105,11 +105,11 @@ export default function ResearchAdmin() {
                   <tr key={item.id} className="group hover:bg-gray-50/30 transition-colors">
                     <td className="p-8 w-32">
                       <div className="relative w-20 aspect-square rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
-                        <img 
-                          src={item.image_url} 
-                          alt="Thumbnail" 
+                        <img
+                          src={item.image_url}
+                          alt="Thumbnail"
                           className="w-full h-full object-cover"
-                          onError={(e) => {(e.target as HTMLImageElement).src = 'https://via.placeholder.com/150'}}
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150' }}
                         />
                       </div>
                     </td>
@@ -130,15 +130,15 @@ export default function ResearchAdmin() {
                     <td className="p-8 text-right">
                       <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
                         {/* Tombol Edit - Mengarah ke halaman edit dengan ID */}
-                        <Link 
+                        <Link
                           href={`/admin/research/edit/${item.id}`}
                           className="p-3 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                         </Link>
-                        
+
                         {/* Tombol Delete */}
-                        <button 
+                        <button
                           onClick={() => handleDelete(item.id)}
                           className="p-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm"
                         >

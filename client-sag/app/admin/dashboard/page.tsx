@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   const [counts, setCounts] = useState({ research: 0, events: 0, groups: 0 });
   const [recentResearch, setRecentResearch] = useState<RecentResearch[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const [publicationData, setPublicationData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
 
@@ -36,17 +36,17 @@ export default function AdminDashboard() {
   const fetchCoreData = async () => {
     try {
       const endpoints = [
-        "http://localhost:8000/api/research",
-        "http://localhost:8000/api/events",
-        "http://localhost:8000/api/study-groups"
+        `${process.env.NEXT_PUBLIC_API_URL}/api/research`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/events`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/study-groups`
       ];
-      
+
       const [resR, resE, resG] = await Promise.all(
         endpoints.map(url => fetch(url).then(res => res.json()))
       );
 
       const researchArr = Array.isArray(resR) ? resR : [];
-      
+
       setCounts({
         research: researchArr.length,
         events: Array.isArray(resE) ? resE.length : 0,
@@ -64,20 +64,20 @@ export default function AdminDashboard() {
       setPublicationData(monthlyCounts);
       setRecentResearch(researchArr.slice(0, 5));
 
-    } catch (error) { 
-      console.error("Fetch Error:", error); 
-    } finally { 
-      setLoading(false); 
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const growth = publicationData[0] === 0 
-    ? (publicationData.reduce((a, b) => a + b, 0) > 0 ? 100 : 0) 
+  const growth = publicationData[0] === 0
+    ? (publicationData.reduce((a, b) => a + b, 0) > 0 ? 100 : 0)
     : (((publicationData[new Date().getMonth()] || 0) / counts.research) * 100).toFixed(1);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-8 text-left font-jakarta">
-      
+
       {/* Header */}
       <div className="mb-8" data-aos="fade-down">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
           <div className="text-right">
             <p className="text-xs text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">Live Server Time</p>
             <p className="text-sm font-medium text-gray-500 tabular-nums">
-                {new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
               <p className="text-3xl font-bold text-gray-800 tabular-nums">{loading ? "-" : counts.research}</p>
             </div>
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" strokeWidth="1.5" strokeLinecap="round" /></svg>
             </div>
           </div>
           <Link href="/admin/research" className="text-xs text-blue-600 hover:text-blue-700 mt-4 inline-block font-semibold">Kelola Publikasi →</Link>
@@ -116,7 +116,7 @@ export default function AdminDashboard() {
               <p className="text-3xl font-bold text-gray-800 tabular-nums">{loading ? "-" : counts.events}</p>
             </div>
             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" strokeWidth="1.5" strokeLinecap="round" /></svg>
             </div>
           </div>
           <Link href="/admin/events" className="text-xs text-purple-600 hover:text-purple-700 mt-4 inline-block font-semibold">Kelola Agenda →</Link>
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
               <p className="text-3xl font-bold text-gray-800 tabular-nums">{loading ? "-" : counts.groups}</p>
             </div>
             <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" strokeWidth="1.5" strokeLinecap="round" /></svg>
             </div>
           </div>
           <Link href="/admin/study-group" className="text-xs text-emerald-600 hover:text-emerald-700 mt-4 inline-block font-semibold">Kelola Pilar →</Link>
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
           <div className="flex items-end gap-2 h-64 px-10">
             {publicationData.map((value, index) => (
               <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                <div 
+                <div
                   className="w-full bg-blue-500 rounded-t-lg transition-all duration-500 hover:bg-blue-600 group relative shadow-sm"
                   style={{ height: `${counts.research === 0 ? 0 : (value / Math.max(...publicationData, 10)) * 200}px`, minHeight: value > 0 ? '4px' : '0px' }}
                 >
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
 
       {/* Audit & Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" data-aos="fade-up">
-        
+
         {/* Recent Publications */}
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-left">
           <div className="flex items-center justify-between mb-6 text-left">

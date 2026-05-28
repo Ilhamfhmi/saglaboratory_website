@@ -14,7 +14,7 @@ export default function AddStudyGroup() {
 
   const [formData, setFormData] = useState({
     title: "",
-    category: "Enterprise Architecture", 
+    category: "Enterprise Architecture",
     description: "",
     leader: "",
     status: "Active",
@@ -50,11 +50,11 @@ export default function AddStudyGroup() {
 
     try {
       const token = localStorage.getItem("sag_token");
-      const response = await fetch("http://localhost:8000/api/study-groups", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/study-groups`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Authorization": `Bearer ${token}`,
-          "Accept": "application/json" 
+          "Accept": "application/json"
         },
         body: data,
       });
@@ -77,7 +77,7 @@ export default function AddStudyGroup() {
       <div className="container mx-auto px-6 max-w-7xl">
         <Link href="/admin/study-group" className="text-gray-400 hover:text-[#013599] transition-all mb-8 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest group">
           <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
@@ -93,10 +93,10 @@ export default function AddStudyGroup() {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-2 text-left">
                 <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Research Pillar / Category</label>
-                <select 
-                  name="category" 
-                  value={formData.category} 
-                  onChange={handleChange} 
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
                   className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold focus:ring-2 focus:ring-[#013599] outline-none text-[#013599]"
                 >
                   <option value="Enterprise Architecture">Enterprise Architecture</option>
@@ -135,9 +135,9 @@ export default function AddStudyGroup() {
                   <span className="text-[10px] font-bold text-gray-400 max-w-[150px] truncate">
                     {selectedFile ? selectedFile.name : "No file chosen"}
                   </span>
-                  <button 
-                    type="button" 
-                    onClick={() => fileInputRef.current?.click()} 
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
                     className="px-5 py-2.5 bg-[#013599] text-white text-[10px] font-black uppercase rounded-full hover:bg-blue-800 transition-all shadow-md active:scale-95"
                   >
                     Choose File
@@ -146,9 +146,9 @@ export default function AddStudyGroup() {
                 </div>
               </div>
 
-              <button 
-                type="submit" 
-                disabled={submitting} 
+              <button
+                type="submit"
+                disabled={submitting}
                 className={`w-full py-6 rounded-full font-black uppercase tracking-[0.2em] text-white text-[12px] transition-all shadow-xl ${submitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#013599] hover:bg-blue-800 shadow-blue-100'}`}
               >
                 {submitting ? "Launching..." : "Launch SAG Study Group"}
@@ -165,7 +165,7 @@ export default function AddStudyGroup() {
                   {preview ? <img src={preview} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" /> : <div className="flex h-full items-center justify-center text-gray-300 font-bold">No Cover Selected</div>}
                   <div className="absolute top-6 left-6">
                     <span className="px-4 py-2 bg-white/90 backdrop-blur-md text-[#013599] rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm">
-                        {formData.category}
+                      {formData.category}
                     </span>
                   </div>
                 </div>
@@ -174,10 +174,10 @@ export default function AddStudyGroup() {
                   <div className="flex items-center gap-2 text-left">
                     {/* ICON ORANG REPLACEMENT */}
                     <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-[#013599] shadow-sm border border-blue-50">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
                     </div>
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Lead by {formData.leader || "Leader Name"}</span>
                   </div>
